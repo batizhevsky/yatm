@@ -2,6 +2,6 @@
 
 module TasksHelper
   def set_me_assigned_to_task(task)
-    button_to("Назначить меня", task_path(task, task: { user_id: current_user }), method: :patch, class: 'btn btn-mini')
+    button_to("Назначить меня", task_path(task, task: { user_id: current_user }), method: :patch, remote: true, class: 'btn btn-mini')
   end
 end

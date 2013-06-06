@@ -20,10 +20,11 @@
       </ul>
     </div>
   </div>
+  <%= subscribe_to "/messages/user-#{current_user.id}" %>
   <div class="container-fluid">
 
     <div class="span9">
-      <%= render "shared/flash_msg" %>
+      <div id="alert"><%= render "shared/flash_msg" %></div>
       <%= yield %>
     </div>
     <div class="span3">

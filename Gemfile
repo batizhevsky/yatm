@@ -20,6 +20,9 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'cancan'
 gem 'draper', '~> 1.0'
+gem 'thin'
+gem "private_pub"
+gem 'state_machine'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby

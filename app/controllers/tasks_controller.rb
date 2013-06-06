@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :set_user, only: [:index, :show, :new, :edit]
+  before_action :set_user
 
   # GET /tasks
   # GET /tasks.json
@@ -46,6 +46,7 @@ class TasksController < ApplicationController
       if @task.update(task_params)
         format.html { redirect_to :back || @task, notice: 'Task was successfully updated.' }
         format.json { head :no_content }
+        format.js { render "update", locals: { message: "Task with ##{ @task.id } \"#{@task.title}\" updated by #{ current_user.decorate.show_name }" } }
       else
         format.html { render action: 'edit' }
         format.json { render json: @task.errors, status: :unprocessable_entity }

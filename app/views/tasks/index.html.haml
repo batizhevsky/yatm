@@ -1,3 +1,4 @@
+= subscribe_to "/messages/update"
 = content_for :users do
   = render "shared/list_users"
 %h1 Listing tasks
@@ -6,21 +7,13 @@
   %i.icon-plus-sign
   Add task
 
-%table.table
+%table.table#tasks
   %tr
     %th Название
     %th Deadline
     %th Назначена
     %th Ответственный
 
-  - @tasks.each do |task|
-    %tr
-      %td= link_to task.title, task
-      %td= task.deadline
-      %td
-        = task.assigned_name
-        = set_me_assigned_to_task(task)
-      %td= task.responsible_name
-
+  = render @tasks
 %br
 

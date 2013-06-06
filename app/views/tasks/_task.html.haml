@@ -1,0 +1,7 @@
+%tr{ class: "task-id#{task.id}" }
+  %td= link_to task.title, task
+  %td= task.deadline
+  %td
+    = task.assigned_name
+    = set_me_assigned_to_task(task)
+  %td= task.responsible_name
