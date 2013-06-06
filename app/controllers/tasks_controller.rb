@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:index, :show, :new, :edit]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.all.decorate
   end
 
   # GET /tasks/1
@@ -24,7 +26,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge(creator: current_user))
 
     respond_to do |format|
       if @task.save
@@ -42,7 +44,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to :back || @task, notice: 'Task was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -62,13 +64,16 @@ class TasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def task_params
-      params.require(:task).permit(:title, :description, :deadline, :user_id, :responsible_id)
-    end
+  def set_task
+    @task = Task.find(params[:id]).decorate
+  end
+
+  def set_user
+    @users = User.all.decorate
+  end
+
+  def task_params
+    params.require(:task).permit(:title, :description, :deadline, :user_id, :responsible_id)
+  end
 end

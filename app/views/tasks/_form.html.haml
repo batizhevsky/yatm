@@ -16,10 +16,10 @@
     = f.label :deadline
     = f.date_select :deadline
   .field
-    = f.label :user_id
-    = f.number_field :user_id
+    = f.label :assigned
+    = f.collection_select :user_id, @users, :id, :show_name, prompt: true
   .field
-    = f.label :responsible_id
-    = f.number_field :responsible_id
+    = f.label :responsible
+    = f.collection_select :responsible_id, @users, :id, :show_name, prompt: true
   .actions
     = f.submit 'Save'

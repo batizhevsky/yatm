@@ -20,9 +20,15 @@
       </ul>
     </div>
   </div>
-  <div class="container">
-    <%= render "shared/flash_msg" %>
-    <%= yield %>
+  <div class="container-fluid">
+
+    <div class="span9">
+      <%= render "shared/flash_msg" %>
+      <%= yield %>
+    </div>
+    <div class="span3">
+      <%= yield :users %>
+    </div>
   </div>
 
 </body>

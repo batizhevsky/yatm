@@ -1,5 +1,3 @@
-%p#notice= notice
-
 %p
   %b Title:
   = @task.title
@@ -10,12 +8,18 @@
   %b Deadline:
   = @task.deadline
 %p
-  %b User:
-  = @task.user_id
+  %b Assigned User:
+  = @task.assigned_name
+  = set_me_assigned_to_task(@task)
 %p
   %b Responsible:
-  = @task.responsible_id
+  = @task.responsible_name
+%p
+  %b Creator:
+  = @task.creator_name
 
 = link_to 'Edit', edit_task_path(@task)
 \|
 = link_to 'Back', tasks_path
+\|
+= link_to 'Delete', task_path(@task), method: :delete, confirm: 'Вы уверены?'

@@ -19,6 +19,7 @@ gem 'devise', git: "git://github.com/plataformatec/devise.git"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'cancan'
+gem 'draper', '~> 1.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
@@ -49,11 +50,12 @@ end
 
 group :development, :test do
   gem "rspec-rails"
-  gem "factory_girl_rails"
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :test do
   gem "database_cleaner"
+  gem 'simplecov', :require => false
 end
 
 # Use ActiveModel has_secure_password

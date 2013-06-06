@@ -2,8 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new # guest user (not logged in)
-    if user.admin?
+    if user.nil?
+      false
+    elsif user.admin?
       can :manage, :all
     else
       can :read, :all

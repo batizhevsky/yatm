@@ -1,27 +1,26 @@
+= content_for :users do
+  = render "shared/list_users"
 %h1 Listing tasks
 
-%table
+=link_to new_task_path, class: 'btn btn-primary' do
+  %i.icon-plus-sign
+  Add task
+
+%table.table
   %tr
-    %th Title
-    %th Description
+    %th Название
     %th Deadline
-    %th User
-    %th Responsible
-    %th
-    %th
-    %th
+    %th Назначена
+    %th Ответственный
 
   - @tasks.each do |task|
     %tr
-      %td= task.title
-      %td= task.description
+      %td= link_to task.title, task
       %td= task.deadline
-      %td= task.user_id
-      %td= task.responsible_id
-      %td= link_to 'Show', task
-      %td= link_to 'Edit', edit_task_path(task)
-      %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = task.assigned_name
+        = set_me_assigned_to_task(task)
+      %td= task.responsible_name
 
 %br
 
-= link_to 'New Task', new_task_path
