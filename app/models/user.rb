@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :trackable, :omniauthable, omniauth_providers: [:facebook]
 
+  validates :email, uniqueness: true
+
   def online?
     updated_at > 10.minutes.ago
   end
