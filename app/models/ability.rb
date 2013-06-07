@@ -8,6 +8,8 @@ class Ability
       can :manage, :all
     else
       can :read, :all
+      can :create, Task
+      can :manage, Task, creator_id: user.id
     end
   end
 end

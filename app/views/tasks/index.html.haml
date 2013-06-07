@@ -3,9 +3,10 @@
   = render "shared/list_users"
 %h1 Listing tasks
 
-=link_to new_task_path, class: 'btn btn-primary' do
-  %i.icon-plus-sign
-  Add task
+- if can? :create, Task
+  =link_to new_task_path, class: 'btn btn-primary' do
+    %i.icon-plus-sign
+    Add task
 
 %table.table#tasks
   %tr

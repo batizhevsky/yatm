@@ -5,11 +5,12 @@ describe TasksController do
   before(:each) do
     request.env["HTTP_REFERER"] = 'http://test.host/'
     @user = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:user, admin: true)
     sign_in(@user)
   end
 
   let(:task_attributes) { FactoryGirl.attributes_for :task }
-  let(:task) { Task.create(task_attributes) }
+  let(:task) { Task.create(task_attributes.merge(creator: @user)) }
 
   describe "GET index" do
     it "as guest" do
@@ -88,6 +89,16 @@ describe TasksController do
         put :update, {:id => task.to_param, :task => task_attributes}
         response.should redirect_to :back
       end
+
+      it "not update if not creator signin" do
+        another_user = FactoryGirl.create(:user)
+        sign_in another_user 
+        time_before_update = task.updated_at
+        put :update, { id: task, task: task_attributes}
+        task.reload
+        task.updated_at.should eq time_before_update
+        response.should redirect_to root_path
+      end
     end
   end
 
@@ -103,6 +114,16 @@ describe TasksController do
       delete :destroy, {:id => task.to_param}
       response.should redirect_to(tasks_url)
     end
+
+    it "not destory someone else's task" do
+      another_user = FactoryGirl.create(:user)
+      sign_in another_user 
+      task
+      expect {
+        delete :destroy, {:id => task.to_param}
+      }.to change(Task, :count).by(0)
+    end
+
   end
 
 end
