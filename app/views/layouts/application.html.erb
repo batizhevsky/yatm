@@ -20,9 +20,8 @@
       </ul>
     </div>
   </div>
-  <%= subscribe_to "/messages/user-#{current_user.id}" %>
   <div class="container-fluid">
-
+    <%= render "shared/user_faye" if user_signed_in? %>
     <div class="span9">
       <div id="alert"><%= render "shared/flash_msg" %></div>
       <%= yield %>

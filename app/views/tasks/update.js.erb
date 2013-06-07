@@ -6,16 +6,3 @@
     $(task).fadeIn("slow");
   });
 <% end %>
-
-<% if @task.responsible_online? && !current_user_is(@task.responsible) %>
-  <% publish_to "/messages/user-#{ @task.responsible_id }" do %>
-
-    var msg = "<%=j render('shared/popup_message', message: message) %>";
-    $('#alert').html(msg).hide();
-    $('#alert').fadeIn("slow", function(){
-      window.setTimeout(function () {
-        $('#alert').fadeOut("slow");
-      }, 3000);
-    });
-  <% end %>
-<% end %>

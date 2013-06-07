@@ -30,6 +30,9 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
+        msg = "Task with ##{ @task.id } \"#{@task.title}\" created by #{ current_user.decorate.show_name }"
+        send_msg_to @task.responsible_id, msg
+
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render action: 'show', status: :created, location: @task }
       else
@@ -44,9 +47,12 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
+        msg = "Task with ##{ @task.id } \"#{@task.title}\" updated by #{ current_user.decorate.show_name }"
+        send_msg_to @task.responsible_id, msg
+
         format.html { redirect_to :back || @task, notice: 'Task was successfully updated.' }
         format.json { head :no_content }
-        format.js { render "update", locals: { message: "Task with ##{ @task.id } \"#{@task.title}\" updated by #{ current_user.decorate.show_name }" } }
+        format.js 
       else
         format.html { render action: 'edit' }
         format.json { render json: @task.errors, status: :unprocessable_entity }

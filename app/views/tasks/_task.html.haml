@@ -1,4 +1,5 @@
 %tr{ class: "task-id#{task.id}" }
+  %td= link_to task.id, task
   %td= link_to task.title, task
   %td= task.deadline
   %td

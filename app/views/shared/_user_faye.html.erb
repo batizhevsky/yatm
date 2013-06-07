@@ -1,0 +1,13 @@
+<%= subscribe_to "/messages/user-#{ current_user.id }" %>
+<script type="text/javascript">
+  <%=raw "PrivatePub.subscribe('/messages/user-#{ current_user.id }', function(data, channel)" %> {
+    var msg = data.message;
+    var new_html = "<div class='alert success' data-alert='alert'>"+msg+"</div>"
+    $('#alert').html(new_html).hide();
+    $('#alert').fadeIn("slow", function(){
+      window.setTimeout(function () {
+        $('#alert').fadeOut("slow");
+      }, 3000);
+    });
+   });
+</script>
