@@ -10,6 +10,8 @@ class Ability
       can :read, :all
       can :create, Task
       can :manage, Task, creator_id: user.id
+      can :update, Task, user_id: user.id
+      can :update, Task, responsible_id: user.id
     end
   end
 end
